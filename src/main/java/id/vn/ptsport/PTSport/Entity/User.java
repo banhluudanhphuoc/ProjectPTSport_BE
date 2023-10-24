@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,16 +24,27 @@ public class User {
     private String dateOfBirth;
     @Column(name = "refresh_token")
     private String refreshToken;
-    @Column(name = "is_active" , length = 2)
-    private int isActive;
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+////    @JoinTable(
+////            name = "user_role",
+////            joinColumns = @JoinColumn(name = "user_username"), // Sử dụng user_username thay vì user_id
+////            inverseJoinColumns = @JoinColumn(name = "role_id")
+////    )
+////    private List<Role> roles;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_username"), // Sử dụng user_username thay vì user_id
+            name = "authority",
+            joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
+
+
+
 
     @OneToMany(mappedBy = "user")
     private List<Cart> carts;
@@ -39,10 +53,15 @@ public class User {
     private List<DeliveryAddress> deliveryAddresses;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    private Set<Order> orders = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<SocialLogin> socialLogins;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "social_login_id")
+    private SocialLogin socialLogin;
+
+    @OneToMany(mappedBy = "username")
+    private Set<Notification> notifications = new LinkedHashSet<>();
+
 
     // Getter và setter
 }

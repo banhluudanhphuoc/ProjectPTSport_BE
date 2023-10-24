@@ -4,7 +4,10 @@ import id.vn.ptsport.PTSport.DTO.Request.UserRegistrationRequest;
 import id.vn.ptsport.PTSport.DTO.Response.UserRegistrationResponse;
 
 
-    public interface UserService {
+public interface UserService {
         UserRegistrationResponse registerUser(UserRegistrationRequest registrationRequest);
+
     }
+
+
 

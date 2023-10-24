@@ -1,7 +1,8 @@
-package edu.kits.movie.Repository;
+package id.vn.ptsport.PTSport.Repository;
 
-import edu.kits.movie.Entity.Authority;
-import edu.kits.movie.Entity.AuthorityId;
+
+import id.vn.ptsport.PTSport.Entity.Authority;
+import id.vn.ptsport.PTSport.Entity.AuthorityId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

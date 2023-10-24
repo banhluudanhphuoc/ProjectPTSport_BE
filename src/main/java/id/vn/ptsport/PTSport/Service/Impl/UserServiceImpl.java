@@ -2,31 +2,35 @@ package id.vn.ptsport.PTSport.Service.Impl;
 
 import id.vn.ptsport.PTSport.DTO.Request.UserRegistrationRequest;
 import id.vn.ptsport.PTSport.DTO.Response.UserRegistrationResponse;
+import id.vn.ptsport.PTSport.Entity.Authority;
+import id.vn.ptsport.PTSport.Entity.AuthorityId;
+import id.vn.ptsport.PTSport.Entity.Role;
 import id.vn.ptsport.PTSport.Entity.User;
+import id.vn.ptsport.PTSport.Repository.AuthorityRepository;
 import id.vn.ptsport.PTSport.Repository.EmailVerificationTokenRepository;
 import id.vn.ptsport.PTSport.Repository.UserRepository;
 import id.vn.ptsport.PTSport.Service.EmailService;
 import id.vn.ptsport.PTSport.Service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 @Service
+@Transactional(rollbackFor = {Exception.class})
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final EmailVerificationTokenRepository tokenRepository;
+    private final AuthorityRepository authorityRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, EmailVerificationTokenRepository tokenRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.emailService = emailService;
-        this.tokenRepository = tokenRepository;
-    }
+
 
     @Override
     public UserRegistrationResponse registerUser(UserRegistrationRequest registrationRequest) {
@@ -51,10 +55,22 @@ public class UserServiceImpl implements UserService {
         user.setName(registrationRequest.getName());
         user.setPhoneNumber(registrationRequest.getPhoneNumber());
         user.setDateOfBirth(registrationRequest.getDateOfBirth());
-        user.setIsActive(1);
+        user.setIsActive(true);
+
+        
+        AuthorityId authorityId = new AuthorityId();
+        Role role = new Role();
+        role.setId(1);
+        authorityId.setUsername(user.getUsername());
+        authorityId.setRoleId(1);
+        Authority authority = new Authority();
+        authority.setId(authorityId);
+        authority.setUsername(user);
+        authority.setRole(role);
 
         // Lưu User và refresh token
         userRepository.save(user);
+        authorityRepository.save(authority);
 
         // Tạo mã xác thực email
         String token = UUID.randomUUID().toString();

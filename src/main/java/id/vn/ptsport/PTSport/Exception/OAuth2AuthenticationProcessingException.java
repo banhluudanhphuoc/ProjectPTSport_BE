@@ -1,4 +1,4 @@
-package edu.kits.movie.Exception;
+package id.vn.ptsport.PTSport.Exception;
 
 import org.springframework.security.core.AuthenticationException;
 

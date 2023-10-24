@@ -1,2 +1,15 @@
-package id.vn.ptsport.PTSport.DTO.Response;public class LoginResponse {
+package id.vn.ptsport.PTSport.DTO.Response;
+
+
+public class LoginResponse {
+    private String token;
+
+    public LoginResponse(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
 }
+

@@ -1,3 +1,3 @@
-package edu.kits.movie.Aspect;
+package id.vn.ptsport.PTSport.Common.Aspect;
 public class LoggingAspect {
 }
