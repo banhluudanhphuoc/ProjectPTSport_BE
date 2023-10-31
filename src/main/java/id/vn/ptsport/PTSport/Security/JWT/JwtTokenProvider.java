@@ -57,5 +57,20 @@ public class JwtTokenProvider {
         }
         return false;
     }
+
+    // Kiểm tra xem token đã hết hạn chưa
+    private boolean isTokenExpired(String token) {
+        Date expiration = Jwts.parser()
+                .setSigningKey(JWT_SECRET)
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+        return expiration.before(new Date());
+    }
+
+    public String extractUsername(String token) {
+        return getUsernameFromJWT(token);
+    }
+
 }
 
