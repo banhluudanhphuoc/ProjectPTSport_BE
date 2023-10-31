@@ -37,12 +37,18 @@ public class ChangePasswordController {
         }
 
         if (tokenProvider.validateToken(jwt)) {
+            String oldPassword = changePasswordRequest.getOldPassword();
             String newPassword = changePasswordRequest.getNewPassword();
-            user.setPassword(passwordEncoder.encode(newPassword));
-            changePassService.updateUser(user);
-            return new ResponseEntity<>(new ChangePasswordResponse(200,"Mật khẩu đã được thay đổi thành công"), HttpStatus.OK);
+
+            // Kiểm tra mật khẩu cũ
+            if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(newPassword));
+                changePassService.updateUser(user);
+                return new ResponseEntity<>(new ChangePasswordResponse(200, "Mật khẩu đã được thay đổi thành công"), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new ChangePasswordResponse(401, "Sai mật khẩu cũ"), HttpStatus.UNAUTHORIZED);
+            }
         } else {
-            return new ResponseEntity<>(new ChangePasswordResponse(401,"Token không hợp lệ"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new ChangePasswordResponse(401, "Token không hợp lệ"), HttpStatus.UNAUTHORIZED);
         }
-    }
-}
+    }}
