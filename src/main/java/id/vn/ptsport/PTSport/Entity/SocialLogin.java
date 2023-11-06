@@ -14,7 +14,7 @@ public class SocialLogin {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "username")
     private User user;
 
     private String socialType;

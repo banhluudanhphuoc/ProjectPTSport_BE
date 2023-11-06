@@ -4,22 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+
 
 @Getter
 @Setter
 @Entity
-public class Payment {
+public class ImageProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String src;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    private BigDecimal totalAmount;
-    private String paymentMethod;
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

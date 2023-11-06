@@ -184,7 +184,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/registration" , "/api/login", "/api/verify-email").permitAll()
+                .antMatchers("/api/registration" , "/api/login", "/api/verify-email",
+                "/api/admin/registration","/api/admin/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

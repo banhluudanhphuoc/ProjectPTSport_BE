@@ -17,16 +17,28 @@ public class Product {
     private String name;
     private BigDecimal price;
     private String description;
+    private String sortDescription;
+    private int quantity;
+    private double discount;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @OneToMany(mappedBy = "product")
-    private List<CartProduct> cartProducts;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
 
     @OneToMany(mappedBy = "product")
     private List<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "product")
+    private List<ImageProduct> images;
+
+    //    @OneToMany(mappedBy = "product")
+//    private List<CartProduct> cartProducts;
 
     // Getter và setter
 }

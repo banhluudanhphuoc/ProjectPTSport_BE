@@ -1,5 +1,6 @@
 package id.vn.ptsport.PTSport.Security.JWT;
 
+import id.vn.ptsport.PTSport.Entity.User;
 import id.vn.ptsport.PTSport.Security.CustomUserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
@@ -69,7 +70,18 @@ public class JwtTokenProvider {
     }
 
     public String extractUsername(String token) {
+
         return getUsernameFromJWT(token);
+    }
+    public String generateAdminToken(User user) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
+        return Jwts.builder()
+                .setSubject(user.getUsername())
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+                .compact();
     }
 
 }

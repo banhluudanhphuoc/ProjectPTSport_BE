@@ -4,23 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
-public class CartProduct {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    private int quantity;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     // Getter và setter
 }
+

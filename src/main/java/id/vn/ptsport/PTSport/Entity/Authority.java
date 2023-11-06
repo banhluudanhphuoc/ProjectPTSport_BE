@@ -1,8 +1,9 @@
 package id.vn.ptsport.PTSport.Entity;
 
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Getter
 @Setter

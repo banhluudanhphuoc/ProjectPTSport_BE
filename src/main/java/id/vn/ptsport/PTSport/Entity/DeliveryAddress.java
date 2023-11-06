@@ -13,22 +13,19 @@ public class DeliveryAddress {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "username")
     private User user;
 
     private String address;
 
-    @ManyToOne
-    @JoinColumn(name = "ward_id")
-    private Ward ward;
+    private String province_name;
+    private String district_name;
+    private String ward_name;
 
-    @ManyToOne
-    @JoinColumn(name = "district_id")
-    private District district;
 
-    @ManyToOne
-    @JoinColumn(name = "province_id")
-    private Province province;
+
+
+
 
     // Getter và setter
 }
